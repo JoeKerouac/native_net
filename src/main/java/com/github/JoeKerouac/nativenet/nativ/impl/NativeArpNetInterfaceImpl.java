@@ -12,7 +12,7 @@ import com.github.JoeKerouac.nativenet.nativ.NativeArpNetInterface;
 public class NativeArpNetInterfaceImpl implements NativeArpNetInterface {
 
     static {
-        System.loadLibrary("native/libcom_github_JoeKerouac_nativenet_nativ_impl_NativeArpNetInterfaceImpl.so");
+        System.loadLibrary("com_github_JoeKerouac_nativenet_nativ_impl_NativeArpNetInterfaceImpl");
 
     }
 

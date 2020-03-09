@@ -135,17 +135,3 @@ char* convert_jbytearray_to_chararray(JNIEnv *env, jbyteArray bytearray) {
 
     return chars;
 }
-
-char* convert_jbytearray_to_chararray(JNIEnv *env, jbyteArray bytearray) {
-    char *chars = NULL;
-    jbyte *bytes;
-    bytes = (*env)->GetByteArrayElements(env, bytearray, 0);
-    int chars_len = (*env)->GetArrayLength(env, bytearray);
-    chars = malloc(chars_len);
-    memset(chars, 0, chars_len);
-    memcpy(chars, bytes, chars_len);
-
-    (*env)->ReleaseByteArrayElements(env, bytearray, bytes, 0);
-
-    return chars;
-}

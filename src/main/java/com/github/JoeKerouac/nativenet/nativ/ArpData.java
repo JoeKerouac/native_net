@@ -1,6 +1,7 @@
 package com.github.JoeKerouac.nativenet.nativ;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode
 public class ArpData {
 
     /**

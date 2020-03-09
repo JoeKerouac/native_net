@@ -17,6 +17,8 @@ public class Main {
     public static void main(String[] args) {
         NativeArpNetInterface nativeArpNetInterface = new NativeArpNetInterfaceImpl();
         int sock = nativeArpNetInterface.createSock();
+        int sock2 = nativeArpNetInterface.createSock();
+        System.out.println("sock 是：" + sock + ":" + sock2);
 
         // 开始扫描
         List<ArpData> allMacData = ArpService.getAllMac(NetStringUtils.toIpData("192.168.199.130"),

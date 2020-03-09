@@ -30,7 +30,7 @@ public class NetStringUtils {
      * @return 数据
      */
     public static byte[] toIpData(String ip) {
-        String[] ipStrs = ip.trim().split(".");
+        String[] ipStrs = ip.trim().split("\\.");
         byte[] data = new byte[ipStrs.length];
         for (int i = 0; i < ipStrs.length; i++) {
             data[i] = (byte) Integer.parseInt(ipStrs[i]);

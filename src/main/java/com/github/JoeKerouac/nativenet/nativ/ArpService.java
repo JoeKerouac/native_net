@@ -59,6 +59,7 @@ public class ArpService {
 
         // 监听ARP消息线程
         new Thread(() -> {
+            System.out.println("开始接受arp数据");
             while (!SHUTDOWN) {
                 ArpData arpData = NATIVE_INTERFACE.receive_arp(SOCK);
 
@@ -77,6 +78,7 @@ public class ArpService {
                     ARP_CACHE.removeFirst();
                 }
             }
+            System.out.println("arp数据接受完毕");
         }, "arp recv").start();
 
     }
@@ -97,7 +99,8 @@ public class ArpService {
             arpData.setSrcIp(localIp);
             arpData.setDestIp(ip);
             arpData.setDestMac(EMPTY_MAC);
-            NATIVE_INTERFACE.sendArp(arpData, SOCK);
+            int result = NATIVE_INTERFACE.sendArp(arpData, SOCK);
+            System.out.println("发送请求：" + arpData + "；\n发送结果：" + result);
             // 隔200毫秒发
             ThreadUtil.sleep(1, TimeUnit.SECONDS);
         }

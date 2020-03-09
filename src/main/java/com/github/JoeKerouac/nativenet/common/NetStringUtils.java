@@ -23,4 +23,24 @@ public class NetStringUtils {
         }
         return sb.toString();
     }
+
+    /**
+     * 将mac原始数据转换为人类可读的mac字符串
+     * @param datas
+     * @return
+     */
+    public static String toMacString(byte[] datas) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < datas.length; i++) {
+            String hexStr = Integer.toHexString(Byte.toUnsignedInt(datas[i]));
+            if (hexStr.length() == 1) {
+                hexStr = "0" + hexStr;
+            }
+            sb.append(hexStr);
+            if (i < (datas.length - 1)) {
+                sb.append(":");
+            }
+        }
+        return sb.toString();
+    }
 }

@@ -19,7 +19,10 @@ public class Main {
             while (true) {
                 ArpData arpData = nativeArpNetInterface.receive_arp(sock);
                 System.out.println("接收到的源ip是：" + NetStringUtils.toIpString(arpData.getSrcIp()));
+                System.out.println("接收到的源mac是：" + NetStringUtils.toMacString(arpData.getSrcMac()));
                 System.out.println("接收到的目标ip是：" + NetStringUtils.toIpString(arpData.getDestIp()));
+                System.out
+                    .println("接收到的目标mac是：" + NetStringUtils.toMacString(arpData.getDestMac()));
             }
         }).start();
     }

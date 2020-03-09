@@ -123,15 +123,22 @@ jbyteArray convert_chararray_to_jbytearray(JNIEnv *env, char *data, int data_len
 }
 
 char* convert_jbytearray_to_chararray(JNIEnv *env, jbyteArray bytearray) {
-    char *chars = NULL;
     jbyte *bytes;
-    bytes = (*env)->GetByteArrayElements(env, bytearray, 0);
     int chars_len = (*env)->GetArrayLength(env, bytearray);
-    chars = malloc(chars_len);
-    memset(chars, 0, chars_len);
-    memcpy(chars, bytes, chars_len);
-
-    (*env)->ReleaseByteArrayElements(env, bytearray, bytes, 0);
-
-    return chars;
+    (*env)->GetByteArrayRegion(env, bytearray, 0, chars_len, bytes);
+    return bytes;
 }
+
+//char* convert_jbytearray_to_chararray(JNIEnv *env, jbyteArray bytearray) {
+//    char *chars = NULL;
+//    jbyte *bytes;
+//    bytes = (*env)->GetByteArrayElements(env, bytearray, 0);
+//    int chars_len = (*env)->GetArrayLength(env, bytearray);
+//    chars = malloc(chars_len);
+//    memset(chars, 0, chars_len);
+//    memcpy(chars, bytes, chars_len);
+//
+//    (*env)->ReleaseByteArrayElements(env, bytearray, bytes, 0);
+//
+//    return chars;
+//}

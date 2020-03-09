@@ -68,9 +68,45 @@ JNIEXPORT jint JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_NativeArp
  */
 JNIEXPORT jobject JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_NativeArpNetInterfaceImpl__1receive_1arp
   (JNIEnv *env, jobject nativeArpNetInterfaceImpl, jint sock){
+  struct arppacket msg;
+  int result = receive_arp(sock, &msg);
+
+  if (receive_arp(sock, &msg) <= 0){
+    // 调用失败
     return NULL;
+  }
+
+  jclass arpDataClass = (*env)->FindClass(env, "com.github.JoeKerouac.nativenet.nativ.ArpData");
+  jmethodID constructorMethod = (*env)->GetMethodID(env, arpDataClass, "<init>", "()V");
+  jobject arpData = (*env)->NewObject(env, arpDataClass, constructorMethod);
+
+
+
+  jfieldID srcIpId = (*env)->GetFieldID(env, arpDataClass, "srcIp", "[B");
+  jbyteArray srcIp = convert_chararray_to_jbytearray(env, arl_get_src_ip(&msg));
+  (*env)->SetObjectField(env, arpData, srcIpId, srcIp);
+
+  jfieldID srcMacId = (*env)->GetFieldID(env, arpDataClass, "srcMac", "[B");
+  jbyteArray srcMac = convert_chararray_to_jbytearray(env, arl_get_src_mac(&msg));
+  (*env)->SetObjectField(env, arpData, srcMacId, srcMac);
+
+  jfieldID destIpId = (*env)->GetFieldID(env, arpDataClass, "destIp", "[B");
+  jbyteArray destIp = convert_chararray_to_jbytearray(env, arl_get_dest_ip(&msg));
+  (*env)->SetObjectField(env, arpData, destIpId, destIp);
+
+
+  jfieldID destMacId = (*env)->GetFieldID(env, arpDataClass, "destMac", "[B");
+  jbyteArray destMac = convert_chararray_to_jbytearray(env, arl_get_dest_mac(&msg));
+  (*env)->SetObjectField(env, arpData, destMacId, destMac);
+
+  return arpData;
 }
 
+jbyteArray convert_chararray_to_jbytearray(JNIEnv *env, char *data, int data_len) {
+    jbyteArray result = (*env)->NewByteArray(env, data_len);
+    (*env)->SetByteArrayRegion(env, result, 0, data_len, data);
+    return result;
+}
 
 char* convert_jbytearray_to_chararray(JNIEnv *env, jbyteArray bytearray) {
     char *chars = NULL;

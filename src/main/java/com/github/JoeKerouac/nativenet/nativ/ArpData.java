@@ -1,12 +1,14 @@
 package com.github.JoeKerouac.nativenet.nativ;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author JoeKerouac
  * @version 2020年03月08日 17:32
  */
 @Data
+@NoArgsConstructor
 public class ArpData {
 
     /**

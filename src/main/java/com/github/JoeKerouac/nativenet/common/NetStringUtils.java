@@ -35,7 +35,7 @@ public class NetStringUtils {
         byte[] data = new byte[len];
         for (int i = 0; i < len; i++) {
             if (i % 2 == 0) {
-                data[i] = (byte) Integer.parseInt(ipStrs[i]);
+                data[i] = (byte) Integer.parseInt(ipStrs[i / 2]);
             } else {
                 data[i] = '.';
             }

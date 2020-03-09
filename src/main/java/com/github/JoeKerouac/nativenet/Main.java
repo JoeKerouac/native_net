@@ -1,5 +1,8 @@
 package com.github.JoeKerouac.nativenet;
 
+import java.util.Arrays;
+
+import com.github.JoeKerouac.nativenet.nativ.ArpData;
 import com.github.JoeKerouac.nativenet.nativ.NativeArpNetInterface;
 import com.github.JoeKerouac.nativenet.nativ.impl.NativeArpNetInterfaceImpl;
 
@@ -12,7 +15,13 @@ public class Main {
         NativeArpNetInterface nativeArpNetInterface = new NativeArpNetInterfaceImpl();
         int sock = nativeArpNetInterface.createSock();
         System.out.println("sock 是 " + sock);
-        nativeArpNetInterface.close(sock);
-        System.out.println("成功了");
+
+        new Thread(() -> {
+            while (true) {
+                ArpData arpData = nativeArpNetInterface.receive_arp(sock);
+                System.out.println("接收到的源ip是：" + Arrays.toString(arpData.getSrcIp()));
+                System.out.println("接收到的目标ip是：" + Arrays.toString(arpData.getDestIp()));
+            }
+        }).start();
     }
 }

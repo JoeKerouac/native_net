@@ -153,3 +153,19 @@ int create_arp_socket() {
 void close_arp_socket(int socket_fd) {
     close(socket_fd);
 }
+
+char * arl_get_dest_mac(struct arppacket *data){
+    return data->ar_tha;
+}
+
+char * arl_get_dest_ip(struct arppacket *data){
+    return data->ar_tip;
+}
+
+char * arl_get_src_mac(struct arppacket *data){
+    return data->ar_sha;
+}
+
+char * arl_get_src_ip(struct arppacket *data){
+    return data->ar_sip;
+}

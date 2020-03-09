@@ -70,6 +70,8 @@ public class ArpService {
                 ARP_CACHE.remove(arpData);
                 ARP_CACHE.add(arpData);
 
+                System.out.println("线程接收到arp数据了：" + arpData);
+
                 // 删除第一个
                 if (ARP_CACHE.size() >= CACHE_SIZE) {
                     ARP_CACHE.removeFirst();

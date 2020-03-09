@@ -7,6 +7,8 @@
 
 char* convert_jbytearray_to_chararray(JNIEnv *env, jbyteArray bytearray);
 
+jbyteArray convert_chararray_to_jbytearray(JNIEnv *env, char *data, int data_len);
+
 /*
  * Class:     com_github_JoeKerouac_nativenet_nativ_impl_NativeArpNetInterfaceImpl
  * Method:    _createSock

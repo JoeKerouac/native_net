@@ -94,11 +94,11 @@ public class ArpService {
         ArpData arpData = new ArpData();
 
         int sock = -1;
-        try{
+        try {
             sock = NATIVE_INTERFACE.createSock();
 
             for (byte i = Byte.MIN_VALUE; i < Byte.MAX_VALUE; i++) {
-                ip[3] = i;
+                ip[ip.length - 1] = i;
                 arpData.setSrcMac(localMac);
                 arpData.setSrcIp(localIp);
                 arpData.setDestIp(ip);
@@ -113,7 +113,7 @@ public class ArpService {
             List<ArpData> list = new ArrayList<>();
             ARP_CACHE.forEach(src -> list.add(copyArpData(src)));
             return list;
-        }finally {
+        } finally {
             if (sock > 0) {
                 NATIVE_INTERFACE.close(sock);
             }

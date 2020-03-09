@@ -31,9 +31,14 @@ public class NetStringUtils {
      */
     public static byte[] toIpData(String ip) {
         String[] ipStrs = ip.trim().split("\\.");
-        byte[] data = new byte[ipStrs.length];
-        for (int i = 0; i < ipStrs.length; i++) {
-            data[i] = (byte) Integer.parseInt(ipStrs[i]);
+        int len = ipStrs.length + ipStrs.length - 1;
+        byte[] data = new byte[len];
+        for (int i = 0; i < len; i++) {
+            if (i % 2 == 0) {
+                data[i] = (byte) Integer.parseInt(ipStrs[i]);
+            } else {
+                data[i] = '.';
+            }
         }
         return data;
     }

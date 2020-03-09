@@ -106,7 +106,7 @@ public class ArpService {
                 int result = NATIVE_INTERFACE.sendArp(arpData, sock);
                 System.out.println("发送请求：" + arpData + "；\n发送结果：" + result);
                 // 隔200毫秒发
-                ThreadUtil.sleep(1, TimeUnit.SECONDS);
+                ThreadUtil.sleep(200, TimeUnit.MILLISECONDS);
             }
 
             ThreadUtil.sleep(1);

@@ -97,7 +97,7 @@ public class ArpService {
             arpData.setDestMac(EMPTY_MAC);
             NATIVE_INTERFACE.sendArp(arpData, SOCK);
             // 隔200毫秒发
-            ThreadUtil.sleep(200, TimeUnit.MILLISECONDS);
+            ThreadUtil.sleep(1, TimeUnit.SECONDS);
         }
 
         ThreadUtil.sleep(1);

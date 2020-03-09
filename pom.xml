@@ -4,7 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.JoeKerouac</groupId>
     <artifactId>native_net</artifactId>
     <version>1.0</version>
     <description>Java调用本地网络工具包</description>
@@ -31,9 +30,9 @@
     </developers>
 
     <scm>
-        <url>https://github.com/JoeKerouac/net</url>
-        <connection>scm:git:https://github.com/JoeKerouac/net.git</connection>
-        <developerConnection>scm:git:https://github.com/JoeKerouac/net.git</developerConnection>
+        <url>https://github.com/JoeKerouac/native_net</url>
+        <connection>scm:git:https://github.com/JoeKerouac/native_net.git</connection>
+        <developerConnection>scm:git:https://github.com/JoeKerouac/native_net.git</developerConnection>
     </scm>
 
 
@@ -68,8 +67,8 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <id>make-assembly</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>

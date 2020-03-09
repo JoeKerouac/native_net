@@ -16,9 +16,7 @@ import com.joe.utils.concurrent.ThreadUtil;
 public class Main {
     public static void main(String[] args) {
         NativeArpNetInterface nativeArpNetInterface = new NativeArpNetInterfaceImpl();
-        int sock = nativeArpNetInterface.createSock();
-        int sock2 = nativeArpNetInterface.createSock();
-        System.out.println("sock 是：" + sock + ":" + sock2);
+        int rcvSock = nativeArpNetInterface.createSock();
 
         // 开始扫描
         List<ArpData> allMacData = ArpService.getAllMac(NetStringUtils.toIpData("192.168.199.130"),
@@ -36,7 +34,7 @@ public class Main {
 
         new Thread(() -> {
             while (true) {
-                ArpData arpData = nativeArpNetInterface.receive_arp(sock);
+                ArpData arpData = nativeArpNetInterface.receive_arp(rcvSock);
                 System.out.println("接收到的源ip是：" + NetStringUtils.toIpString(arpData.getSrcIp()));
                 System.out.println("接收到的源mac是：" + NetStringUtils.toMacString(arpData.getSrcMac()));
                 System.out.println("接收到的目标ip是：" + NetStringUtils.toIpString(arpData.getDestIp()));

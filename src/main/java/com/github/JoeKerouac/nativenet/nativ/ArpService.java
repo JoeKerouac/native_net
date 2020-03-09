@@ -28,9 +28,9 @@ public class ArpService {
     private static NativeArpNetInterface          NATIVE_INTERFACE;
 
     /**
-     * 本地arp sock
+     * arp接受sock
      */
-    private static int                            SOCK;
+    private static int                            RCV_SOCK;
 
     /**
      * ARP缓存
@@ -50,10 +50,10 @@ public class ArpService {
     static {
         EMPTY_MAC = new byte[] { 0, 0, 0, 0, 0, 0 };
         NATIVE_INTERFACE = new NativeArpNetInterfaceImpl();
-        SOCK = NATIVE_INTERFACE.createSock();
+        RCV_SOCK = NATIVE_INTERFACE.createSock();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             SHUTDOWN = true;
-            NATIVE_INTERFACE.close(SOCK);
+            NATIVE_INTERFACE.close(RCV_SOCK);
         }));
         ARP_CACHE = new ConcurrentLinkedDeque<>();
 
@@ -61,7 +61,7 @@ public class ArpService {
         new Thread(() -> {
             System.out.println("开始接受arp数据");
             while (!SHUTDOWN) {
-                ArpData arpData = NATIVE_INTERFACE.receive_arp(SOCK);
+                ArpData arpData = NATIVE_INTERFACE.receive_arp(RCV_SOCK);
 
                 // 如果没有接收方，说明是想要查询mac的，忽略
                 if (Arrays.equals(arpData.getDestMac(), EMPTY_MAC)) {
@@ -93,22 +93,31 @@ public class ArpService {
         byte[] ip = Arrays.copyOf(localIp, localIp.length);
         ArpData arpData = new ArpData();
 
-        for (byte i = Byte.MIN_VALUE; i < Byte.MAX_VALUE; i++) {
-            ip[3] = i;
-            arpData.setSrcMac(localMac);
-            arpData.setSrcIp(localIp);
-            arpData.setDestIp(ip);
-            arpData.setDestMac(EMPTY_MAC);
-            int result = NATIVE_INTERFACE.sendArp(arpData, SOCK);
-            System.out.println("发送请求：" + arpData + "；\n发送结果：" + result);
-            // 隔200毫秒发
-            ThreadUtil.sleep(1, TimeUnit.SECONDS);
-        }
+        int sock = -1;
+        try{
+            sock = NATIVE_INTERFACE.createSock();
 
-        ThreadUtil.sleep(1);
-        List<ArpData> list = new ArrayList<>();
-        ARP_CACHE.forEach(src -> list.add(copyArpData(src)));
-        return list;
+            for (byte i = Byte.MIN_VALUE; i < Byte.MAX_VALUE; i++) {
+                ip[3] = i;
+                arpData.setSrcMac(localMac);
+                arpData.setSrcIp(localIp);
+                arpData.setDestIp(ip);
+                arpData.setDestMac(EMPTY_MAC);
+                int result = NATIVE_INTERFACE.sendArp(arpData, sock);
+                System.out.println("发送请求：" + arpData + "；\n发送结果：" + result);
+                // 隔200毫秒发
+                ThreadUtil.sleep(1, TimeUnit.SECONDS);
+            }
+
+            ThreadUtil.sleep(1);
+            List<ArpData> list = new ArrayList<>();
+            ARP_CACHE.forEach(src -> list.add(copyArpData(src)));
+            return list;
+        }finally {
+            if (sock > 0) {
+                NATIVE_INTERFACE.close(sock);
+            }
+        }
     }
 
     /**

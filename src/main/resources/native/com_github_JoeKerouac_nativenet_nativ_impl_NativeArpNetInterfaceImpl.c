@@ -80,7 +80,7 @@ JNIEXPORT jobject JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_Native
 
   msg = (struct arppacket *)realData;
 
-  jclass arpDataClass = (*env)->FindClass(env, "com.github.JoeKerouac.nativenet.nativ.ArpData");
+  jclass arpDataClass = (*env)->FindClass(env, "com/github/JoeKerouac/nativenet/nativ/ArpData");
   jmethodID constructorMethod = (*env)->GetMethodID(env, arpDataClass, "<init>", "()V");
   jobject arpData = (*env)->NewObject(env, arpDataClass, constructorMethod);
 
@@ -110,6 +110,8 @@ JNIEXPORT jobject JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_Native
   destMacData = arl_get_dest_mac(msg);
   jbyteArray destMac = convert_chararray_to_jbytearray(env, destMacData, 6);
   (*env)->SetObjectField(env, arpData, destMacId, destMac);
+
+  free(realData);
 
   return arpData;
 }

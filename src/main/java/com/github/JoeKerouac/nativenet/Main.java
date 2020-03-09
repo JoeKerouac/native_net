@@ -19,7 +19,7 @@ public class Main {
         int rcvSock = nativeArpNetInterface.createSock();
 
         // 开始扫描
-        List<ArpData> allMacData = ArpService.getAllMac("192.168.199.130".getBytes(),
+        List<ArpData> allMacData = ArpService.getAllMac("192.168.199.130",
             NetStringUtils.toMacData("08:00:27:f6:f5:96"));
 
         allMacData.forEach(arpData -> {

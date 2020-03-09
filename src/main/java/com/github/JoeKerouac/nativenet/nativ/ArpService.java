@@ -85,12 +85,13 @@ public class ArpService {
 
     /**
      * 获取局域网所有ip对应的mac
-     * @param localIp 本地ip
+     * @param localIpStr 本地ip，例如192.168.1.1
      * @param localMac 本地mac
      * @return 局域网所有ip对应的mac
      */
-    public static List<ArpData> getAllMac(byte[] localIp, byte[] localMac) {
-        byte[] ip = Arrays.copyOf(localIp, localIp.length);
+    public static List<ArpData> getAllMac(String localIpStr, byte[] localMac) {
+        String destIpPre = localIpStr.substring(0, localIpStr.lastIndexOf(".") + 1);
+        byte[] localIp = localIpStr.getBytes();
         ArpData arpData = new ArpData();
 
         int sock = -1;
@@ -98,10 +99,9 @@ public class ArpService {
             sock = NATIVE_INTERFACE.createSock();
 
             for (byte i = Byte.MIN_VALUE; i < Byte.MAX_VALUE; i++) {
-                ip[ip.length - 1] = i;
                 arpData.setSrcMac(localMac);
                 arpData.setSrcIp(localIp);
-                arpData.setDestIp(ip);
+                arpData.setDestIp((destIpPre + Byte.toUnsignedInt(i)).getBytes());
                 arpData.setDestMac(EMPTY_MAC);
                 int result = NATIVE_INTERFACE.sendArp(arpData, sock);
                 System.out.println("发送请求：" + arpData + "；\n发送结果：" + result);

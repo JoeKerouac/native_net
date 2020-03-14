@@ -1,4 +1,4 @@
-package com.github.JoeKerouac.nativenet.nativ;
+package com.github.JoeKerouac.nativenet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.TimeUnit;
 
+import com.github.JoeKerouac.nativenet.nativ.ArpData;
+import com.github.JoeKerouac.nativenet.nativ.NativeArpNetInterface;
 import com.github.JoeKerouac.nativenet.nativ.impl.NativeArpNetInterfaceImpl;
 import com.joe.utils.concurrent.ThreadUtil;
 
@@ -25,7 +27,7 @@ public class ArpService {
     /**
      * 本地arp接口
      */
-    private static NativeArpNetInterface          NATIVE_INTERFACE;
+    private static NativeArpNetInterface NATIVE_INTERFACE;
 
     /**
      * arp接受sock

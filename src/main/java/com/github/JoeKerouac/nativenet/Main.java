@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.github.JoeKerouac.nativenet.common.NetStringUtils;
 import com.github.JoeKerouac.nativenet.nativ.ArpData;
-import com.github.JoeKerouac.nativenet.nativ.ArpService;
 import com.github.JoeKerouac.nativenet.nativ.NativeArpNetInterface;
 import com.github.JoeKerouac.nativenet.nativ.impl.NativeArpNetInterfaceImpl;
 import com.joe.utils.concurrent.ThreadUtil;

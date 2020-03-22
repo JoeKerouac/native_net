@@ -36,7 +36,20 @@ jbyteArray convert_chararray_to_jbytearray(JNIEnv *env, char *data, int data_len
 
 char* convert_jbytearray_to_chararray(JNIEnv *env, jbyteArray bytearray) ;
 
+void nf_callback(struct callback_data *data);
 
+
+/**
+ * @brief nf_userspace_queue的回调函数
+ * @param data 回调数据
+ * @param netFilterCallbackData NetFilterCallbackData对象
+ */
+void nf_callback(struct callback_data *data) {
+    jclass clazz = (*env)->GetObjectClass(env, dest);
+    jmethodID methodId = (*env)->GetMethodID(env, clazz, "accept", "(Ljava/lang/Object;)V");
+    jobject jobj = data_convert_to_java(data);
+    (*env)->CallVoidMethod(env, _callback, methodId, jobj);
+}
 
 /**
  * @brief 将NetFilterCallbackData转换为callback_data结构体
@@ -193,6 +206,7 @@ char* convert_jbytearray_to_chararray(JNIEnv *env, jbyteArray bytearray) {
  */
 JNIEXPORT void JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_NativeNetFilterInterfaceImpl__1run
   (JNIEnv *env, jobject nativeNetFilterInterfaceImpl, jint queueNum){
+    nfuq_register(&nf_callback);
     nfuq_run(queueNum);
 }
 

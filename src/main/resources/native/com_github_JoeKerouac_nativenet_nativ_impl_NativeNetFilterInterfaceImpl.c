@@ -66,7 +66,7 @@ jobject data_convert_to_java(JNIEnv *env, struct callback_data *data){
     jobject netFilterCallbackData = new_java_instance(env, "com/github/JoeKerouac/nativenet/nativ/NetFilterCallbackData");
     jbyteArray array =  convert_chararray_to_jbytearray(env, nfuq_read_data(data), nfuq_read_data_len(data));
     set_java_obj_field(env, netFilterCallbackData, "data", "[B", array);
-    set_java_short_field(env, netFilterCallbackData, "dataLen", "S", (jobject)nfuq_read_data_len(data));
+    set_java_short_field(env, netFilterCallbackData, "dataLen", "S", nfuq_read_data_len(data));
     set_java_int_field(env, netFilterCallbackData, "queueNum", "I", nfuq_read_queue_num(data));
     set_java_int_field(env, netFilterCallbackData, "hookNum", "I", nfuq_read_hook_num(data));
     set_java_int_field(env, netFilterCallbackData, "id", "I", nfuq_read_id(data));

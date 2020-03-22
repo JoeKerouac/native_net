@@ -50,7 +50,7 @@ void nf_callback(struct callback_data *data) {
     // 获取JNIEnv
     (*g_jvm)->AttachCurrentThread(g_jvm, &env, NULL);
     jclass clazz = (*env)->GetObjectClass(env, _callback);
-    jmethodID methodId = (*env)->GetMethodID(env, clazz, "accept", "(Lcom/github/JoeKerouac/nativenet/nativ/NetFilterCallbackData;)V");
+    jmethodID methodId = (*env)->GetMethodID(env, clazz, "accept", "(Ljava/lang/Object;)V");
     jobject jobj = data_convert_to_java(env, data);
 
     jobject netFilterCallbackData = new_java_instance(env, "com/github/JoeKerouac/nativenet/nativ/NetFilterCallbackData");

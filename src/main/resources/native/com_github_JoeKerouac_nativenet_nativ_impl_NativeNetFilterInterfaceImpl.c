@@ -12,7 +12,7 @@ extern "C" {
 #endif
 
 jobject *_callback;
-JNIEnv *_env;
+JavaVM *g_jvm;
 
 
 struct callback_data * data_convert_to_c(JNIEnv *env, jobject netFilterCallbackData);
@@ -46,10 +46,13 @@ void nf_callback(struct callback_data *data);
  * @param netFilterCallbackData NetFilterCallbackData对象
  */
 void nf_callback(struct callback_data *data) {
-    jclass clazz = (*_env)->GetObjectClass(_env, *_callback);
-    jmethodID methodId = (*_env)->GetMethodID(_env, clazz, "accept", "(Lcom/github/JoeKerouac/nativenet/nativ/NetFilterCallbackData;)V");
-    jobject jobj = data_convert_to_java(_env, data);
-    (*_env)->CallVoidMethod(_env, *_callback, methodId, jobj);
+    JNIEnv env;
+    // 获取JNIEnv
+    g_jvm->AttachCurrentThread(g_jvm, &env, NULL);
+    jclass clazz = env->GetObjectClass(&env, *_callback);
+    jmethodID methodId = env->GetMethodID(&env, clazz, "accept", "(Lcom/github/JoeKerouac/nativenet/nativ/NetFilterCallbackData;)V");
+    jobject jobj = data_convert_to_java(&env, data);
+    env->CallVoidMethod(&env, *_callback, methodId, jobj);
 }
 
 /**
@@ -209,6 +212,8 @@ JNIEXPORT void JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_NativeNet
   (JNIEnv *env, jobject nativeNetFilterInterfaceImpl, jint queueNum){
     nfuq_register(&nf_callback);
     nfuq_run(queueNum);
+    // JNIEnv只能当前线程使用，不能多线程用，所以这里保存JavaVM供后续使用
+    (*env)->GetJavaVM(env, &g_jvm);
 }
 
 /*
@@ -219,7 +224,6 @@ JNIEXPORT void JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_NativeNet
 JNIEXPORT void JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_NativeNetFilterInterfaceImpl__1register
   (JNIEnv *env, jobject nativeNetFilterInterfaceImpl, jobject callback) {
     _callback = &callback;
-    _env = env;
 }
 
 /*

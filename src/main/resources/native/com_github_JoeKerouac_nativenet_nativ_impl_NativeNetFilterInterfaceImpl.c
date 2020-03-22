@@ -129,7 +129,7 @@ int get_java_int_field(JNIEnv *env, jobject dest, char *field_name){
 char* get_java_bytearray_field(JNIEnv *env, jobject dest, char *field_name){
     jclass clazz = (*env)->GetObjectClass(env, dest);
     jfieldID field_id = (*env)->GetFieldID(env, clazz, field_name, "[B");
-    jobject bytearray = (*env)->GetShortField(env, dest, field_id);
+    jobject bytearray = (*env)->GetObjectField(env, dest, field_id);
     return convert_jbytearray_to_chararray(env, bytearray);
 }
 

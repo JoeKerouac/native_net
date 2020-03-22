@@ -223,6 +223,12 @@ JNIEXPORT void JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_NativeNet
  */
 JNIEXPORT void JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_NativeNetFilterInterfaceImpl__1register
   (JNIEnv *env, jobject nativeNetFilterInterfaceImpl, jobject callback) {
+    // 防止该对象被回收，不这么做该方法结束callback就有可能被回收；使用该方法后可以使用DeleteGlobalRef方法删除引用，让GC回收
+    (*env)->NewGlobalRef(env, callback);
+    // 如果不为空，那么释放旧对象引用
+    if (_callback){
+        (*env)->DeleteGlobalRef(env, *_callback);
+    }
     _callback = &callback;
 }
 

@@ -35,7 +35,7 @@ struct callback_data * data_convert_to_c(JNIEnv *env, jobject netFilterCallbackD
  * @param data callback_data结构体
  * @return NetFilterCallbackData对象
  */
-jobject data_convert_to_java(JNIEnv *env, callback_data *data){
+jobject data_convert_to_java(JNIEnv *env, struct callback_data *data){
     jobject netFilterCallbackData = new_instance(env, "com/github/JoeKerouac/nativenet/nativ/NetFilterCallbackData");
     jbyteArray array =  convert_chararray_to_jbytearray(env, nfuq_read_data(data), nfuq_read_data_len(data));
     set_java_field(env, netFilterCallbackData, "data", "[B", array);

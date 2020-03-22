@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 
-jobject *_callback;
+jobject _callback;
 JavaVM *g_jvm;
 
 
@@ -49,10 +49,10 @@ void nf_callback(struct callback_data *data) {
     JNIEnv *env;
     // 获取JNIEnv
     (*g_jvm)->AttachCurrentThread(g_jvm, &env, NULL);
-    jclass clazz = (*env)->GetObjectClass(env, *_callback);
+    jclass clazz = (*env)->GetObjectClass(env, _callback);
     jmethodID methodId = (*env)->GetMethodID(env, clazz, "accept", "(Lcom/github/JoeKerouac/nativenet/nativ/NetFilterCallbackData;)V");
     jobject jobj = data_convert_to_java(env, data);
-    (*env)->CallVoidMethod(env, *_callback, methodId, jobj);
+    (*env)->CallVoidMethod(env, _callback, methodId, jobj);
 }
 
 /**
@@ -227,9 +227,9 @@ JNIEXPORT void JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_NativeNet
     jobject new_callback = (*env)->NewGlobalRef(env, callback);
     // 如果不为空，那么释放旧对象引用
     if (_callback){
-        (*env)->DeleteGlobalRef(env, *_callback);
+        (*env)->DeleteGlobalRef(env, _callback);
     }
-    _callback = &new_callback;
+    _callback = new_callback;
 }
 
 /*

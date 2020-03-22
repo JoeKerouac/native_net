@@ -41,7 +41,7 @@ struct callback_data * data_convert_to_c(JNIEnv *env, jobject netFilterCallbackD
  * @return NetFilterCallbackData对象
  */
 jobject data_convert_to_java(JNIEnv *env, struct callback_data *data){
-    jobject netFilterCallbackData = new_instance(env, "com/github/JoeKerouac/nativenet/nativ/NetFilterCallbackData");
+    jobject netFilterCallbackData = new_java_instance(env, "com/github/JoeKerouac/nativenet/nativ/NetFilterCallbackData");
     jbyteArray array =  convert_chararray_to_jbytearray(env, nfuq_read_data(data), nfuq_read_data_len(data));
     set_java_field(env, netFilterCallbackData, "data", "[B", array);
 
@@ -92,7 +92,7 @@ char* get_java_bytearray_field(JNIEnv *env, jobject dest, char *field_name){
  * @param class_name class全称，例如com/github/JoeKerouac/nativenet/nativ/ArpData
  * @return 对象实例
  */
-jobject new_instance(JNIEnv *env, char *class_name){
+jobject new_java_instance(JNIEnv *env, char *class_name){
   jclass clazz = (*env)->FindClass(env, class_name);
   jmethodID constructorMethod = (*env)->GetMethodID(env, clazz, "<init>", "()V");
   jobject instance = (*env)->NewObject(env, clazz, constructorMethod);

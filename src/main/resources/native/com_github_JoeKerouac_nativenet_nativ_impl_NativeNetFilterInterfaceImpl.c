@@ -18,7 +18,11 @@ struct callback_data * data_convert_to_c(JNIEnv *env, jobject netFilterCallbackD
 
 jobject data_convert_to_java(JNIEnv *env, struct callback_data *data);
 
-void set_java_field(JNIEnv *env, jobject dest, char *field_name, char *sig, jobject *jobj);
+void set_java_obj_field(JNIEnv *env, jobject dest, char *field_name, char *sig, jobject jobj);
+
+void set_java_short_field(JNIEnv *env, jobject dest, char *field_name, char *sig, jshort jobj);
+
+void set_java_int_field(JNIEnv *env, jobject dest, char *field_name, char *sig, jint jobj);
 
 short get_java_short_field(JNIEnv *env, jobject dest, char *field_name);
 

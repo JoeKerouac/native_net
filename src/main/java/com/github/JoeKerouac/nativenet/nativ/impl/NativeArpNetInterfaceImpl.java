@@ -13,7 +13,6 @@ public class NativeArpNetInterfaceImpl implements NativeArpNetInterface {
 
     static {
         System.loadLibrary("com_github_JoeKerouac_nativenet_nativ_impl_NativeArpNetInterfaceImpl");
-
     }
 
     public int createSock() {

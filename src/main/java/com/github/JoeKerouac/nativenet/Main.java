@@ -5,7 +5,9 @@ import java.util.List;
 import com.github.JoeKerouac.nativenet.common.NetStringUtils;
 import com.github.JoeKerouac.nativenet.nativ.ArpData;
 import com.github.JoeKerouac.nativenet.nativ.NativeArpNetInterface;
+import com.github.JoeKerouac.nativenet.nativ.NativeNetFilterInterface;
 import com.github.JoeKerouac.nativenet.nativ.impl.NativeArpNetInterfaceImpl;
+import com.github.JoeKerouac.nativenet.nativ.impl.NativeNetFilterInterfaceImpl;
 import com.joe.utils.concurrent.ThreadUtil;
 
 /**
@@ -14,6 +16,22 @@ import com.joe.utils.concurrent.ThreadUtil;
  */
 public class Main {
     public static void main(String[] args) {
+        netfilter();
+    }
+
+    static void netfilter() {
+        NativeNetFilterInterface nativeNetFilterInterface = new NativeNetFilterInterfaceImpl();
+        nativeNetFilterInterface.register(data -> {
+            System.out.println("收到数据是：\n\n" + data);
+            System.out.println("\n\n\n\n\n");
+            nativeNetFilterInterface.sendVerdict(data, 1);
+            System.out.println("发送决策成功");
+        });
+
+        nativeNetFilterInterface.run(0);
+    }
+
+    static void scan() {
         NativeArpNetInterface nativeArpNetInterface = new NativeArpNetInterfaceImpl();
         int rcvSock = nativeArpNetInterface.createSock();
 

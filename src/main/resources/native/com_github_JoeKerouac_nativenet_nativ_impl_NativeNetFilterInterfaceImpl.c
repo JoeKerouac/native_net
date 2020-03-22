@@ -210,10 +210,10 @@ char* convert_jbytearray_to_chararray(JNIEnv *env, jbyteArray bytearray) {
  */
 JNIEXPORT void JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_NativeNetFilterInterfaceImpl__1run
   (JNIEnv *env, jobject nativeNetFilterInterfaceImpl, jint queueNum){
-    nfuq_register(&nf_callback);
-    nfuq_run(queueNum);
     // JNIEnv只能当前线程使用，不能多线程用，所以这里保存JavaVM供后续使用
     (*env)->GetJavaVM(env, &g_jvm);
+    nfuq_register(&nf_callback);
+    nfuq_run(queueNum);
 }
 
 /*

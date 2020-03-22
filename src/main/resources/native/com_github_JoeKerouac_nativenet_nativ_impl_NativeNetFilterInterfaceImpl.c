@@ -63,12 +63,11 @@ struct callback_data * data_convert_to_c(JNIEnv *env, jobject netFilterCallbackD
 jobject data_convert_to_java(JNIEnv *env, struct callback_data *data){
     jobject netFilterCallbackData = new_java_instance(env, "com/github/JoeKerouac/nativenet/nativ/NetFilterCallbackData");
     jbyteArray array =  convert_chararray_to_jbytearray(env, nfuq_read_data(data), nfuq_read_data_len(data));
-    set_java_field(env, netFilterCallbackData, "data", "[B", array);
-
-    set_java_field(env, netFilterCallbackData, "dataLen", "S", nfuq_read_data_len(data));
-    set_java_field(env, netFilterCallbackData, "queueNum", "I", nfuq_read_queue_num(data));
-    set_java_field(env, netFilterCallbackData, "hookNum", "I", nfuq_read_hook_num(data));
-    set_java_field(env, netFilterCallbackData, "id", "I", nfuq_read_id(data));
+    set_java_obj_field(env, netFilterCallbackData, "data", "[B", array);
+    set_java_short_field(env, netFilterCallbackData, "dataLen", "S", (jobject)nfuq_read_data_len(data));
+    set_java_int_field(env, netFilterCallbackData, "queueNum", "I", nfuq_read_queue_num(data));
+    set_java_int_field(env, netFilterCallbackData, "hookNum", "I", nfuq_read_hook_num(data));
+    set_java_int_field(env, netFilterCallbackData, "id", "I", nfuq_read_id(data));
 
     return netFilterCallbackData;
 }
@@ -81,10 +80,38 @@ jobject data_convert_to_java(JNIEnv *env, struct callback_data *data){
  * @param sig 指定字段签名
  * @param jobj 要设置的值
  */
-void set_java_field(JNIEnv *env, jobject dest, char *field_name, char *sig, jobject *jobj){
+void set_java_obj_field(JNIEnv *env, jobject dest, char *field_name, char *sig, jobject jobj){
     jclass clazz = (*env)->GetObjectClass(env, dest);
     jfieldID field_id = (*env)->GetFieldID(env, clazz, field_name, sig);
     (*env)->SetObjectField(env, dest, field_id, jobj);
+}
+
+/**
+ * @brief 设置指定对象的指定字段
+ * @param env JNI环境
+ * @param dest 指定对象
+ * @param field_name 指定字段名
+ * @param sig 指定字段签名
+ * @param jobj 要设置的值
+ */
+void set_java_short_field(JNIEnv *env, jobject dest, char *field_name, char *sig, jshort jobj){
+    jclass clazz = (*env)->GetObjectClass(env, dest);
+    jfieldID field_id = (*env)->GetFieldID(env, clazz, field_name, sig);
+    (*env)->SetShortField(env, dest, field_id, jobj);
+}
+
+/**
+ * @brief 设置指定对象的指定字段
+ * @param env JNI环境
+ * @param dest 指定对象
+ * @param field_name 指定字段名
+ * @param sig 指定字段签名
+ * @param jobj 要设置的值
+ */
+void set_java_int_field(JNIEnv *env, jobject dest, char *field_name, char *sig, jint jobj){
+    jclass clazz = (*env)->GetObjectClass(env, dest);
+    jfieldID field_id = (*env)->GetFieldID(env, clazz, field_name, sig);
+    (*env)->SetIntField(env, dest, field_id, jobj);
 }
 
 short get_java_short_field(JNIEnv *env, jobject dest, char *field_name){

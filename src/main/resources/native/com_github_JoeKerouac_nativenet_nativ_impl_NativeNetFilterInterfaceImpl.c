@@ -48,7 +48,7 @@ void nf_callback(struct callback_data *data);
 void nf_callback(struct callback_data *data) {
     jclass clazz = (*_env)->GetObjectClass(_env, _callback);
     jmethodID methodId = (*_env)->GetMethodID(_env, clazz, "accept", "(Ljava/lang/Object;)V");
-    jobject jobj = data_convert_to_java(data);
+    jobject jobj = data_convert_to_java(_env, data);
     (*_env)->CallVoidMethod(_env, _callback, methodId, jobj);
 }
 

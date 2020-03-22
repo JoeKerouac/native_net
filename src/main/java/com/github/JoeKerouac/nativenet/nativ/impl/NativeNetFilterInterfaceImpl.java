@@ -14,6 +14,8 @@ import com.github.JoeKerouac.nativenet.nativ.NetFilterCallbackData;
 public class NativeNetFilterInterfaceImpl implements NativeNetFilterInterface {
 
     static {
+        System.loadLibrary("mnl");
+        System.loadLibrary("netfilter_queue");
         System.loadLibrary("com_github_JoeKerouac_nativenet_nativ_impl_NativeNetFilterInterfaceImpl");
     }
 

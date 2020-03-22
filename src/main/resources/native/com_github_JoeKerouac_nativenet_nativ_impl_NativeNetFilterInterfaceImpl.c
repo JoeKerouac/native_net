@@ -19,14 +19,18 @@ jobject *_callback;
  * @return callback_data结构体指针，使用完毕需要自己free
  */
 struct callback_data * data_convert_to_c(JNIEnv *env, jobject netFilterCallbackData){
-    struct callback_data *data;
-    data = malloc_callback_data();
-    nfuq_set_data(data, get_java_bytearray_field(env, netFilterCallbackData, "data"));
-    nfuq_set_data_len(data, get_java_short_field(env, netFilterCallbackData, "dataLen"));
-    nfuq_set_queue_num(data, get_java_int_field(env, netFilterCallbackData, "queueNum"));
-    nfuq_set_hook_num(data, get_java_int_field(env, netFilterCallbackData, "hookNum"));
-    nfuq_set_id(data, get_java_int_field(env, netFilterCallbackData, "id"));
-    return data;
+    struct callback_data *callback_data;
+    callback_data = malloc_callback_data();
+
+    char *data;
+    data = get_java_bytearray_field(env, netFilterCallbackData, "data");
+
+    nfuq_set_data(callback_data, data);
+    nfuq_set_data_len(callback_data, get_java_short_field(env, netFilterCallbackData, "dataLen"));
+    nfuq_set_queue_num(callback_data, get_java_int_field(env, netFilterCallbackData, "queueNum"));
+    nfuq_set_hook_num(callback_data, get_java_int_field(env, netFilterCallbackData, "hookNum"));
+    nfuq_set_id(callback_data, get_java_int_field(env, netFilterCallbackData, "id"));
+    return callback_data;
 }
 
 

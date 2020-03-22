@@ -12,6 +12,26 @@ extern "C" {
 jobject *_callback;
 
 
+struct callback_data * data_convert_to_c(JNIEnv *env, jobject netFilterCallbackData);
+
+jobject data_convert_to_java(JNIEnv *env, struct callback_data *data);
+
+void set_java_field(JNIEnv *env, jobject dest, char *field_name, char *sig, jobject *jobj);
+
+short get_java_short_field(JNIEnv *env, jobject dest, char *field_name);
+
+int get_java_int_field(JNIEnv *env, jobject dest, char *field_name);
+
+char* get_java_bytearray_field(JNIEnv *env, jobject dest, char *field_name);
+
+jobject new_java_instance(JNIEnv *env, char *class_name);
+
+jbyteArray convert_chararray_to_jbytearray(JNIEnv *env, char *data, int data_len) ;
+
+char* convert_jbytearray_to_chararray(JNIEnv *env, jbyteArray bytearray) ;
+
+
+
 /**
  * @brief 将NetFilterCallbackData转换为callback_data结构体
  * @param env JNI环境

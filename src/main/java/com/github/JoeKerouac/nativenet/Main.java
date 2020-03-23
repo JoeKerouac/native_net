@@ -27,7 +27,7 @@ public class Main {
             IpPackage ipPackage = new IpPackage(data.getData());
             System.out.println("源ip是：" + NetStringUtils.toIpString(ipPackage.getSrcAdd()));
             System.out.println("目标ip是：" + NetStringUtils.toIpString(ipPackage.getDestAdd()));
-            System.out.println("子协议：" + NetStringUtils.toIpString(ipPackage.getSubProtocol()));
+            System.out.println("子协议：" + ipPackage.getSubProtocol());
             System.out.println("\n\n\n\n\n");
             nativeNetFilterInterface.sendVerdict(data, 1);
             System.out.println("发送决策成功");

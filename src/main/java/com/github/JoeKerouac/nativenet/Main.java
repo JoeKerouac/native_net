@@ -8,6 +8,7 @@ import com.github.JoeKerouac.nativenet.nativ.NativeArpNetInterface;
 import com.github.JoeKerouac.nativenet.nativ.NativeNetFilterInterface;
 import com.github.JoeKerouac.nativenet.nativ.impl.NativeArpNetInterfaceImpl;
 import com.github.JoeKerouac.nativenet.nativ.impl.NativeNetFilterInterfaceImpl;
+import com.github.JoeKerouac.nativenet.protocol.IpPackage;
 import com.joe.utils.concurrent.ThreadUtil;
 
 /**
@@ -23,6 +24,10 @@ public class Main {
         NativeNetFilterInterface nativeNetFilterInterface = new NativeNetFilterInterfaceImpl();
         nativeNetFilterInterface.register(data -> {
             System.out.println("收到数据是：\n\n" + data);
+            IpPackage ipPackage = new IpPackage(data.getData());
+            System.out.println("源ip是：" + NetStringUtils.toIpString(ipPackage.getSrcAdd()));
+            System.out.println("目标ip是：" + NetStringUtils.toIpString(ipPackage.getDestAdd()));
+            System.out.println("子协议：" + NetStringUtils.toIpString(ipPackage.getSubProtocol()));
             System.out.println("\n\n\n\n\n");
             nativeNetFilterInterface.sendVerdict(data, 1);
             System.out.println("发送决策成功");

@@ -1,5 +1,7 @@
 package com.github.JoeKerouac.nativenet.common;
 
+import com.joe.utils.protocol.DatagramUtil;
+
 /**
  * 网络字符串工具包
  *
@@ -7,6 +9,15 @@ package com.github.JoeKerouac.nativenet.common;
  * @version 2020年03月09日 18:34
  */
 public class NetStringUtils {
+
+    /**
+     * 将ip数据转换为人类可读的字符串，例如192.168.1.1
+     * @param addr ip数据
+     * @return 人类可读的ip字符串，例如192.168.1.1
+     */
+    public static String toIpString(int addr) {
+        return toIpString(DatagramUtil.splitToByte(addr));
+    }
 
     /**
      * 将ip数据转换为人类可读的字符串，例如192.168.1.1

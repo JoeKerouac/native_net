@@ -27,14 +27,6 @@ public class Main {
             try {
                 IpPacket ipPackage = new IpPacket(data.getData());
 
-                if (!NetStringUtils.toIpString(ipPackage.getDestAdd()).equals("192.168.199.130")) {
-                    System.out.println("源ip是：" + NetStringUtils.toIpString(ipPackage.getSrcAdd()));
-                    System.out
-                        .println("目标ip是：" + NetStringUtils.toIpString(ipPackage.getDestAdd()));
-                    System.out.println("协议是：" + ipPackage.getSubProtocol());
-                    System.out.println("对象是：" + ipPackage.getSubPackage());
-                }
-
                 if (ipPackage.getSubPackage() != null) {
                     TcpSegment tcpPackage = ipPackage.getSubPackage();
                     // 只打印80端口的数据

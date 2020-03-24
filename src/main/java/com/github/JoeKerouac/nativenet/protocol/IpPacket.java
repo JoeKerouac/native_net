@@ -6,13 +6,13 @@ package com.github.JoeKerouac.nativenet.protocol;
  * @author JoeKerouac
  * @version 2020年03月23日 21:24
  */
-public class IpPackage extends AbstractProtocol {
+public class IpPacket extends AbstractProtocol {
 
-    public IpPackage(byte[] data) {
+    public IpPacket(byte[] data) {
         super(data);
     }
 
-    public IpPackage(byte[] data, int offset) {
+    public IpPacket(byte[] data, int offset) {
         super(data, offset);
     }
 

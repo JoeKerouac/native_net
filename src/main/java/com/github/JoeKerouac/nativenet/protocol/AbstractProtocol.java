@@ -5,7 +5,7 @@ import java.util.BitSet;
 import com.joe.utils.common.Assert;
 
 /**
- * 抽象协议栈
+ * 抽象协议栈，一般第二层数据链路层叫Frame，第三层网络层叫Packet，第四层传输层叫Segment
  *
  * @author JoeKerouac
  * @version 2020年03月24日 14:11

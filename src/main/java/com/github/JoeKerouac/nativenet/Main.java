@@ -39,9 +39,9 @@ public class Main {
                         System.out.println("数据是：" + new String(tcpPackage.getPayload()));
 
                     }
+                    System.out.println("\n\n\n\n\n");
+                    System.out.println("决策成功");
                 }
-                System.out.println("\n\n\n\n\n");
-                System.out.println("发送决策成功");
             } catch (Exception e) {
                 e.printStackTrace();
             }

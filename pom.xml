@@ -47,6 +47,11 @@
             <groupId>com.github.JoeKerouac</groupId>
             <artifactId>utils</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.JoeKerouac</groupId>
+            <artifactId>command</artifactId>
+        </dependency>
     </dependencies>
 
 

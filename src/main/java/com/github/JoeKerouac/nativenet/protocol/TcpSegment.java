@@ -1,5 +1,7 @@
 package com.github.JoeKerouac.nativenet.protocol;
 
+import java.util.Arrays;
+
 /**
  * TCP报文
  *
@@ -100,5 +102,13 @@ public class TcpSegment extends AbstractProtocol {
      */
     public int getUrgentPoint() {
         return readBit(144, 16);
+    }
+
+    /**
+     * 获取负载数据
+     * @return 负载数据
+     */
+    public byte[] getPayload() {
+        return Arrays.copyOfRange(data, getHeaderLen(), data.length);
     }
 }

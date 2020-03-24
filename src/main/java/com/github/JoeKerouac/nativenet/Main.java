@@ -24,16 +24,19 @@ public class Main {
     static void netfilter() {
         NativeNetFilterInterface nativeNetFilterInterface = new NativeNetFilterInterfaceImpl();
         nativeNetFilterInterface.register(data -> {
-            System.out.println("收到数据是：\n\n" + data);
             IpPacket ipPackage = new IpPacket(data.getData());
-            System.out.println("源ip是：" + NetStringUtils.toIpString(ipPackage.getSrcAdd()));
-            System.out.println("目标ip是：" + NetStringUtils.toIpString(ipPackage.getDestAdd()));
-            System.out.println("子协议：" + ipPackage.getSubProtocol());
+
             if (ipPackage.getSubPackage() != null) {
                 TcpSegment tcpPackage = ipPackage.getSubPackage();
-                System.out.println("目标端口是：" + tcpPackage.getDestPort());
-                System.out.println("源端口是：" + tcpPackage.getSrcPort());
-                System.out.println("flag是：" + tcpPackage.getFlag());
+                // 只打印80端口的数据
+                if (tcpPackage.getDestPort() == 80) {
+                    System.out.println("源ip是：" + NetStringUtils.toIpString(ipPackage.getSrcAdd()));
+                    System.out.println("\n");
+                    System.out
+                        .println("目标ip是：" + NetStringUtils.toIpString(ipPackage.getDestAdd()));
+                    System.out.println("数据是：" + new String(tcpPackage.getPayload()));
+
+                }
             }
             System.out.println("\n\n\n\n\n");
             nativeNetFilterInterface.sendVerdict(data, 1);

@@ -1,22 +1,19 @@
 package com.github.JoeKerouac.nativenet.protocol;
 
-import com.joe.utils.protocol.DatagramUtil;
-
 /**
  * ip报文
  *
  * @author JoeKerouac
  * @version 2020年03月23日 21:24
  */
-public class IpPackage {
-
-    /**
-     * 原始ip数据
-     */
-    private byte[] data;
+public class IpPackage extends AbstractPackage {
 
     public IpPackage(byte[] data) {
-        this.data = data;
+        super(data);
+    }
+
+    public IpPackage(byte[] data, int offset) {
+        super(data, offset);
     }
 
     /**
@@ -24,7 +21,7 @@ public class IpPackage {
      * @return 版本号，4位
      */
     public int getVersion() {
-        return Byte.toUnsignedInt(data[0]) >> 4;
+        return readBit(0, 4);
     }
 
     /**
@@ -32,7 +29,7 @@ public class IpPackage {
      * @return 首部长度，4位
      */
     public int getHeaderLen() {
-        return data[0] & 0x0f;
+        return readBit(4, 4);
     }
 
     /**
@@ -40,7 +37,7 @@ public class IpPackage {
      * @return 服务类型，8位
      */
     public int getServiceType() {
-        return data[1];
+        return readBit(8, 8);
     }
 
     /**
@@ -48,7 +45,7 @@ public class IpPackage {
      * @return 报文长度，16位
      */
     public int getPackgeLen() {
-        return Byte.toUnsignedInt(data[2]) << 8 | Byte.toUnsignedInt(data[3]);
+        return readBit(16, 16);
     }
 
     /**
@@ -56,7 +53,7 @@ public class IpPackage {
      * @return 标识字段，16位
      */
     public int getSeq() {
-        return Byte.toUnsignedInt(data[4]) << 8 | Byte.toUnsignedInt(data[5]);
+        return readBit(32, 16);
     }
 
     /**
@@ -66,7 +63,7 @@ public class IpPackage {
      * <li>MF：为1表示“更多的片”，为0表示这是最后一片</li>
      */
     public int getFlag() {
-        return Byte.toUnsignedInt(data[6]) >> 5;
+        return readBit(48, 3);
     }
 
     /**
@@ -74,7 +71,7 @@ public class IpPackage {
      * @return 片偏移，总共13位
      */
     public int getOffset() {
-        return (Byte.toUnsignedInt(data[6]) << 8 | Byte.toUnsignedInt(data[7])) & 0x1fff;
+        return readBit(51, 13);
     }
 
     /**
@@ -82,15 +79,19 @@ public class IpPackage {
      * @return TTL，总共8位
      */
     public int getTtl() {
-        return data[8];
+        return readBit(64, 8);
     }
 
     /**
      * 获取子协议
      * @return 子协议，长度8位
+     * <li>1:ICMP协议</li>
+     * <li>2:IGMP协议</li>
+     * <li>6:TCP协议</li>
+     * <li>17:UDP协议</li>
      */
     public int getSubProtocol() {
-        return data[9];
+        return readBit(72, 8);
     }
 
     /**
@@ -98,23 +99,35 @@ public class IpPackage {
      * @return 校验和，总共16位
      */
     public int getCheckSum() {
-        return Byte.toUnsignedInt(data[10]) << 8 | Byte.toUnsignedInt(data[11]);
+        return readBit(80, 16);
     }
 
     /**
      * 获取源地址
-     * @return 源地址
+     * @return 源地址，32位，无符号
      */
     public int getSrcAdd() {
-        return DatagramUtil.mergeToInt(data, 12);
+        return readBit(96, 32);
     }
 
     /**
      * 获取目标地址
-     * @return 目标地址
+     * @return 目标地址，32位，无符号
      */
     public int getDestAdd() {
-        return DatagramUtil.mergeToInt(data, 16);
+        return readBit(128, 32);
+    }
+
+    /**
+     * 获取子协议数据
+     * @return 子协议数据，子协议不支持的时候将会返回null
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends AbstractPackage> T getSubPackage() {
+        if (getSubProtocol() == 6) {
+            return (T) new TcpPackage(data, getHeaderLen());
+        }
+        return null;
     }
 
 }

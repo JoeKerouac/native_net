@@ -6,7 +6,7 @@ package com.github.JoeKerouac.nativenet.protocol;
  * @author JoeKerouac
  * @version 2020年03月23日 21:24
  */
-public class IpPackage extends AbstractPackage {
+public class IpPackage extends AbstractProtocol {
 
     public IpPackage(byte[] data) {
         super(data);
@@ -123,9 +123,9 @@ public class IpPackage extends AbstractPackage {
      * @return 子协议数据，子协议不支持的时候将会返回null
      */
     @SuppressWarnings("unchecked")
-    public <T extends AbstractPackage> T getSubPackage() {
+    public <T extends AbstractProtocol> T getSubPackage() {
         if (getSubProtocol() == 6) {
-            return (T) new TcpPackage(data, getHeaderLen());
+            return (T) new TcpSegment(data, getHeaderLen());
         }
         return null;
     }

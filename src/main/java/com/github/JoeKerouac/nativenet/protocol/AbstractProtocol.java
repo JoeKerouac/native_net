@@ -5,10 +5,12 @@ import java.util.BitSet;
 import com.joe.utils.common.Assert;
 
 /**
+ * 抽象协议栈
+ *
  * @author JoeKerouac
  * @version 2020年03月24日 14:11
  */
-public class AbstractPackage {
+public class AbstractProtocol {
 
     /**
      * 原始网络数据
@@ -25,11 +27,11 @@ public class AbstractPackage {
      */
     private final BitSet   bitSet;
 
-    public AbstractPackage(byte[] data) {
+    public AbstractProtocol(byte[] data) {
         this(data, 0);
     }
 
-    public AbstractPackage(byte[] data, int offset) {
+    public AbstractProtocol(byte[] data, int offset) {
         this.data = data;
         this.offset = offset;
         this.bitSet = BitSet.valueOf(data);

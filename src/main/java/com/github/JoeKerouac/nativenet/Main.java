@@ -9,7 +9,7 @@ import com.github.JoeKerouac.nativenet.nativ.NativeNetFilterInterface;
 import com.github.JoeKerouac.nativenet.nativ.impl.NativeArpNetInterfaceImpl;
 import com.github.JoeKerouac.nativenet.nativ.impl.NativeNetFilterInterfaceImpl;
 import com.github.JoeKerouac.nativenet.protocol.IpPackage;
-import com.github.JoeKerouac.nativenet.protocol.TcpPackage;
+import com.github.JoeKerouac.nativenet.protocol.TcpSegment;
 import com.joe.utils.concurrent.ThreadUtil;
 
 /**
@@ -30,7 +30,7 @@ public class Main {
             System.out.println("目标ip是：" + NetStringUtils.toIpString(ipPackage.getDestAdd()));
             System.out.println("子协议：" + ipPackage.getSubProtocol());
             if (ipPackage.getSubPackage() != null) {
-                TcpPackage tcpPackage = ipPackage.getSubPackage();
+                TcpSegment tcpPackage = ipPackage.getSubPackage();
                 System.out.println("目标端口是：" + tcpPackage.getDestPort());
                 System.out.println("源端口是：" + tcpPackage.getSrcPort());
                 System.out.println("flag是：" + tcpPackage.getFlag());

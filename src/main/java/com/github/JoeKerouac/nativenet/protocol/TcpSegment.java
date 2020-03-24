@@ -6,13 +6,13 @@ package com.github.JoeKerouac.nativenet.protocol;
  * @author JoeKerouac
  * @version 2020年03月24日 09:28
  */
-public class TcpPackage extends AbstractPackage {
+public class TcpSegment extends AbstractProtocol {
 
-    public TcpPackage(byte[] data) {
+    public TcpSegment(byte[] data) {
         super(data);
     }
 
-    public TcpPackage(byte[] data, int offset) {
+    public TcpSegment(byte[] data, int offset) {
         super(data, offset);
     }
 

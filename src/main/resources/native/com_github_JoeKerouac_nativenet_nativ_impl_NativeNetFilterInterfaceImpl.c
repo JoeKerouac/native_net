@@ -240,9 +240,13 @@ JNIEXPORT void JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_NativeNet
  */
 JNIEXPORT void JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_NativeNetFilterInterfaceImpl__1sendVerdict
   (JNIEnv *env, jobject nativeNetFilterInterfaceImpl, jobject netFilterCallbackData, jint verdict){
+    // 申请内存，后边要释放
     struct callback_data *data = data_convert_to_c(env, netFilterCallbackData);
     nfuq_send_verdict(nfuq_read_queue_num(data), nfuq_read_id(data), nfuq_read_data_len(data),
       nfuq_read_data(data), verdict);
+    // 释放内存
+    free(nfuq_read_data(data));
+    free_callback_data(data);
 }
 
 

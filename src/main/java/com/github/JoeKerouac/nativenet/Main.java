@@ -1,6 +1,5 @@
 package com.github.JoeKerouac.nativenet;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.github.JoeKerouac.nativenet.common.NetStringUtils;
@@ -28,15 +27,8 @@ public class Main {
             try {
                 IpPacket ipPackage = new IpPacket(data.getData());
 
-                if (!NetStringUtils.toIpString(ipPackage.getDestAdd()).equals("192.168.199.130")) {
-                    System.out.println("子协议：" + ipPackage.getSubProtocol());
-                    System.out.println("子对象：" + ipPackage.getSubPackage());
-                    System.out.println("ip报文:" + Arrays.toString(data.getData()));
-                }
-
-
-                if (ipPackage.getSubPackage() != null) {
-                    TcpSegment tcpPackage = ipPackage.getSubPackage();
+                if (ipPackage.getSubPackt() instanceof TcpSegment) {
+                    TcpSegment tcpPackage = (TcpSegment) ipPackage.getSubPackt();
                     // 只打印80端口的数据
                     if (tcpPackage.getDestPort() == 80) {
                         System.out

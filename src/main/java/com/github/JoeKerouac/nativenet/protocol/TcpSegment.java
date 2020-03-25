@@ -1,7 +1,5 @@
 package com.github.JoeKerouac.nativenet.protocol;
 
-import java.util.Arrays;
-
 /**
  * TCP报文
  *
@@ -54,6 +52,7 @@ public class TcpSegment extends AbstractProtocol {
      * 获取首部长度
      * @return 首部长度，4位
      */
+    @Override
     public int getHeaderLen() {
         return readBit(96, 4);
     }
@@ -104,11 +103,4 @@ public class TcpSegment extends AbstractProtocol {
         return readBit(144, 16);
     }
 
-    /**
-     * 获取负载数据
-     * @return 负载数据
-     */
-    public byte[] getPayload() {
-        return Arrays.copyOfRange(data, getHeaderLen(), data.length);
-    }
 }

@@ -26,8 +26,9 @@ public class IpPacket extends AbstractProtocol {
 
     /**
      * 获取首部长度
-     * @return 首部长度，4位
+     * @return 首部长度，4位，单位byte
      */
+    @Override
     public int getHeaderLen() {
         return readBit(4, 4);
     }
@@ -42,7 +43,7 @@ public class IpPacket extends AbstractProtocol {
 
     /**
      * 获取整个报文的长度
-     * @return 报文长度，16位
+     * @return 报文长度，16位，单位byte
      */
     public int getPackgeLen() {
         return readBit(16, 16);
@@ -118,16 +119,15 @@ public class IpPacket extends AbstractProtocol {
         return readBit(128, 32);
     }
 
-    /**
-     * 获取子协议数据
-     * @return 子协议数据，子协议不支持的时候将会返回null
-     */
-    @SuppressWarnings("unchecked")
-    public <T extends AbstractProtocol> T getSubPackage() {
-        if (getSubProtocol() == 6) {
-            return (T) new TcpSegment(data, getHeaderLen());
+    @Override
+    public AbstractProtocol getSubPackt() {
+        // 协议解析，目前仅支持TCP协议
+        switch (getSubProtocol()) {
+            case 6:
+                return new TcpSegment(data, getHeaderLen());
+            default:
+                return new UnknownProtocol(data);
         }
-        return null;
     }
 
 }

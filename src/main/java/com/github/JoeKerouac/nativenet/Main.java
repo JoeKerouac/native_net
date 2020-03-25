@@ -38,9 +38,9 @@ public class Main {
                             .println("目标ip是：" + NetStringUtils.toIpString(ipPackage.getDestAdd()));
                         System.out.println("数据是：" + new String(tcpPackage.getPayload()));
 
+                        System.out.println("\n\n\n\n\n");
+                        System.out.println("决策成功");
                     }
-                    System.out.println("\n\n\n\n\n");
-                    System.out.println("决策成功");
                 }
             } catch (Exception e) {
                 e.printStackTrace();

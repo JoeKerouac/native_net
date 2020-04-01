@@ -60,6 +60,7 @@ public class IpPacket extends AbstractProtocol {
     /**
      * ip报文类型
      * @return 总共3位，R、DF、MF三位。目前只有后两位有效
+     * <li>R位：保留位，固定0</li>
      * <li>DF位：为1表示不分片，为0表示分片</li>
      * <li>MF：为1表示“更多的片”，为0表示这是最后一片</li>
      */

@@ -45,7 +45,15 @@ public class Main {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            nativeNetFilterInterface.sendVerdict(data, 1);
+            int result = nativeNetFilterInterface.sendVerdict(data, 1);
+            if (result < 0) {
+                System.out.println("发送失败了，结果：" + result);
+            }
+            result = nativeNetFilterInterface.sendVerdict(data, 1);
+            if (result < 0) {
+                System.out.println("发送重试仍然失败，结果：" + result);
+                System.exit(result);
+            }
         });
 
         nativeNetFilterInterface.run(0);

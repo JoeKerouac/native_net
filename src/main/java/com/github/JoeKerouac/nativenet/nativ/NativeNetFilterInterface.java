@@ -32,6 +32,7 @@ public interface NativeNetFilterInterface {
      *                <li>3:NF_QUEUE</li>
      *                <li>4:NF_REPEAT</li>
      *                <li>5:NF_STOP</li>
+     * @return 发送的数据长度，返回小于0表示发送失败
      */
-    void sendVerdict(NetFilterCallbackData data, int verdict);
+    int sendVerdict(NetFilterCallbackData data, int verdict);
 }

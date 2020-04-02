@@ -28,7 +28,7 @@ JNIEXPORT void JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_NativeNet
  * Method:    _sendVerdict
  * Signature: (Lcom/github/JoeKerouac/nativenet/nativ/NetFilterCallbackData;I)V
  */
-JNIEXPORT void JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_NativeNetFilterInterfaceImpl__1sendVerdict
+JNIEXPORT int JNICALL Java_com_github_JoeKerouac_nativenet_nativ_impl_NativeNetFilterInterfaceImpl__1sendVerdict
   (JNIEnv *, jobject, jobject, jint);
 
 #ifdef __cplusplus

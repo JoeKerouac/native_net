@@ -28,13 +28,13 @@ public class NativeNetFilterInterfaceImpl implements NativeNetFilterInterface {
     }
 
     @Override
-    public void sendVerdict(NetFilterCallbackData data, int verdict) {
-        _sendVerdict(data, verdict);
+    public int sendVerdict(NetFilterCallbackData data, int verdict) {
+        return _sendVerdict(data, verdict);
     }
 
     private native void _run(int queueNum);
 
     native void _register(Consumer<NetFilterCallbackData> callback);
 
-    native void _sendVerdict(NetFilterCallbackData data, int verdict);
+    native int _sendVerdict(NetFilterCallbackData data, int verdict);
 }

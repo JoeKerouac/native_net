@@ -45,6 +45,10 @@ public class Main {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            System.out.println("准备发送数据:\n\n" + data);
+            System.out.println("\n\n\n");
+
             int result = nativeNetFilterInterface.sendVerdict(data, 1);
             if (result < 0) {
                 System.out.println("发送失败了，结果：" + result);

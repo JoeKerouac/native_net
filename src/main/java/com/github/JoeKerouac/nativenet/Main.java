@@ -30,7 +30,7 @@ public class Main {
                 if (ipPackage.getSubPackt() instanceof TcpSegment) {
                     TcpSegment tcpPackage = (TcpSegment) ipPackage.getSubPackt();
                     // 只打印80端口的数据
-                    if (tcpPackage.getDestPort() == 80) {
+                    if (tcpPackage.getDestPort() == 80 || tcpPackage.getSrcPort() == 80) {
                         System.out
                             .println("源ip是：" + NetStringUtils.toIpString(ipPackage.getSrcAdd()));
                         System.out.println("\n");

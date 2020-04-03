@@ -30,7 +30,8 @@ public class IpPacket extends AbstractProtocol {
      */
     @Override
     public int getHeaderLen() {
-        return readBit(4, 4);
+        // 注意，这里在ip协议中单位是4byte，而不是1byte，所以要乘以4
+        return readBit(4, 4) * 4;
     }
 
     /**

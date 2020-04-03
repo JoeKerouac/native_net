@@ -55,7 +55,7 @@ public abstract class AbstractProtocol {
 
     /**
      * 获取协议头长度
-     * @return 协议头长度
+     * @return 协议头长度，单位byte
      */
     public abstract int getHeaderLen();
 

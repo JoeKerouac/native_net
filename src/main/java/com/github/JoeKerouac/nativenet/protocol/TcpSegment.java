@@ -34,6 +34,8 @@ public class TcpSegment extends AbstractProtocol {
 
     /**
      * 获取请求序列号
+     * <p></p>
+     * 在TCP传送的流中，每一个字节一个序号。e.g.一个报文段的序号为300，此报文段数据部分共有100字节，则下一个报文段的序号为400
      * @return 请求序列号，32位无符号
      */
     public int getReqSeq() {
@@ -68,7 +70,7 @@ public class TcpSegment extends AbstractProtocol {
 
     /**
      * 获取标志位
-     * @return 标志位，6位
+     * @return 标志位，6位，标志位对应信息如下(可能同时出现两个标志位，比如24，表示ACK|PSH)：
      * <li>1:FIN</li>
      * <li>2:SYN</li>
      * <li>4:RST</li>

@@ -52,7 +52,7 @@ public class IpPacketTest {
         IpPacket packet = new IpPacket(IP_PACKT);
 
         Assert.assertEquals(packet.getVersion(), 4);
-        Assert.assertEquals(packet.getHeaderLen(), 5);
+        Assert.assertEquals(packet.getHeaderLen(), 20);
         Assert.assertEquals(packet.getServiceType(), 0);
         Assert.assertEquals(packet.getPackgeLen(), 325);
         Assert.assertEquals(packet.getSeq(), 0);
@@ -67,15 +67,15 @@ public class IpPacketTest {
 
         TcpSegment segment = (TcpSegment) packet.getSubPackt();
 
-        Assert.assertEquals(segment.getSrcPort(), 64);
-        Assert.assertEquals(segment.getDestPort(), 63);
-        Assert.assertEquals(segment.getReqSeq(), 104672704);
-        Assert.assertEquals(segment.getAckSeq(), -1463304757);
-        Assert.assertEquals(segment.getHeaderLen(), 7);
-        Assert.assertEquals(segment.getReserved(), 30);
-        Assert.assertEquals(segment.getFlag(), 41);
-        Assert.assertEquals(segment.getWindowSize(), 43258);
-        Assert.assertEquals(segment.getCheckSum(), 27904);
-        Assert.assertEquals(segment.getUrgentPoint(), 20625);
+        Assert.assertEquals(segment.getSrcPort(), 64109);
+        Assert.assertEquals(segment.getDestPort(), 80);
+        Assert.assertEquals(segment.getReqSeq(), -1857051175);
+        Assert.assertEquals(segment.getAckSeq(), -1758231959);
+        Assert.assertEquals(segment.getHeaderLen(), 20);
+        Assert.assertEquals(segment.getReserved(), 0);
+        Assert.assertEquals(segment.getFlag(), 24);
+        Assert.assertEquals(segment.getWindowSize(), 4096);
+        Assert.assertEquals(segment.getCheckSum(), 52642);
+        Assert.assertEquals(segment.getUrgentPoint(), 0);
     }
 }

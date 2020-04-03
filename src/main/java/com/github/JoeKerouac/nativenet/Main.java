@@ -1,8 +1,6 @@
 package com.github.JoeKerouac.nativenet;
 
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import com.github.JoeKerouac.nativenet.common.NetStringUtils;
 import com.github.JoeKerouac.nativenet.nativ.ArpData;
@@ -19,7 +17,6 @@ import com.joe.utils.concurrent.ThreadUtil;
  * @version 2020年03月08日 17:27
  */
 public class Main {
-    private static final Lock LOCK = new ReentrantLock();
     public static void main(String[] args) {
         netfilter();
     }
@@ -49,22 +46,15 @@ public class Main {
                 e.printStackTrace();
             }
 
-            LOCK.lock();
-            try{
-                System.out.println("准备发送数据:\n\n" + data);
-                System.out.println("\n\n\n");
-
-                int result = nativeNetFilterInterface.sendVerdict(data, 1);
+            int result = nativeNetFilterInterface.sendVerdict(data, 1);
+            if (result < 0) {
+                System.out.println("发送失败了，结果：" + result);
+                result = nativeNetFilterInterface.sendVerdict(data, 1);
                 if (result < 0) {
-                    System.out.println("发送失败了，结果：" + result);
-                    result = nativeNetFilterInterface.sendVerdict(data, 1);
-                    if (result < 0) {
-                        System.out.println("发送重试仍然失败，结果：" + result);
-                        System.exit(result);
-                    }
+                    System.out.println("发送重试仍然失败，结果：" + result);
+                    System.out.println("要发送的数据是：" + data);
+                    System.exit(result);
                 }
-            }finally {
-                LOCK.unlock();
             }
         });
 

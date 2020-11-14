@@ -50,6 +50,11 @@
 
         <dependency>
             <groupId>com.github.JoeKerouac</groupId>
+            <artifactId>net</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.JoeKerouac</groupId>
             <artifactId>command</artifactId>
         </dependency>
     </dependencies>

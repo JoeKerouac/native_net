@@ -1,4 +1,6 @@
 # 注意，本地库编译依赖的arp_request_lib.o和nf_userspace_queue.o这两个私有库需要自己编译，源码在clib库中
+# 编译上述两个库的时候需要使用gcc -fPIC -shared 命令来编译
+
 
 # 编译arp本地库
 gcc -fPIC -shared com_github_JoeKerouac_nativenet_nativ_impl_NativeArpNetInterfaceImpl.c arp_request_lib.o -o libcom_github_JoeKerouac_nativenet_nativ_impl_NativeArpNetInterfaceImpl.so

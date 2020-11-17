@@ -66,6 +66,10 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
+                    <!-- 最终产出的jar包名 -->
+                    <finalName>${artifactId}-${version}</finalName>
+                    <!-- 删除jar-with-dependencies后缀 -->
+                    <appendAssemblyId>false</appendAssemblyId>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>

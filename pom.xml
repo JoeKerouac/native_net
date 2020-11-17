@@ -69,7 +69,7 @@
                     <!-- 最终产出的jar包名 -->
                     <finalName>${artifactId}-${version}</finalName>
                     <!-- 删除jar-with-dependencies后缀 -->
-<!--                    <appendAssemblyId>false</appendAssemblyId>-->
+                    <appendAssemblyId>false</appendAssemblyId>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>

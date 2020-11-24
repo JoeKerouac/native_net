@@ -25,6 +25,11 @@ import org.apache.poi.hssf.record.RecordInputStream;
  */
 public class Main {
 
+    static {
+        System.loadLibrary("arp_request_lib");
+        System.loadLibrary("nf_userspace_queue");
+    }
+
     private static Map<String, InputRecordStream> inputRecordStreamMap = new ConcurrentHashMap<>();
     private static Map<String, OutputRecordStream> outputRecordStreamMap = new ConcurrentHashMap<>();
 

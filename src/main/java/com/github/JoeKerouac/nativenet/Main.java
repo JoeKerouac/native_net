@@ -17,7 +17,6 @@ import com.github.JoeKerouac.nativenet.protocol.TcpSegment;
 import com.joe.tls.InputRecordStream;
 import com.joe.tls.OutputRecordStream;
 import com.joe.utils.concurrent.ThreadUtil;
-import org.apache.poi.hssf.record.RecordInputStream;
 
 /**
  * @author JoeKerouac
@@ -25,17 +24,12 @@ import org.apache.poi.hssf.record.RecordInputStream;
  */
 public class Main {
 
-    static {
-        System.loadLibrary("arp_request_lib");
-        System.loadLibrary("nf_userspace_queue");
-    }
-
-    private static Map<String, InputRecordStream> inputRecordStreamMap = new ConcurrentHashMap<>();
+    private static Map<String, InputRecordStream>  inputRecordStreamMap  = new ConcurrentHashMap<>();
     private static Map<String, OutputRecordStream> outputRecordStreamMap = new ConcurrentHashMap<>();
 
-    private static Map<String, InputStream> inputStreamMap = new ConcurrentHashMap<>();
+    private static Map<String, InputStream>        inputStreamMap        = new ConcurrentHashMap<>();
 
-    private static Map<String, OutputStream> outputStreamMap = new ConcurrentHashMap<>();
+    private static Map<String, OutputStream>       outputStreamMap       = new ConcurrentHashMap<>();
 
     public static void main(String[] args) {
         netfilter();
@@ -61,17 +55,21 @@ public class Main {
                         System.out.println("\n\n\n\n\n");
                         System.out.println("决策成功");
                     } else if (tcpPackage.getDestPort() == 443 || tcpPackage.getSrcPort() == 443) {
-                        int clientIp = tcpPackage.getSrcPort() == 443 ? ipPackage.getDestAdd() : ipPackage.getSrcAdd();
-                        int clientPort = tcpPackage.getSrcPort() == 443 ? tcpPackage.getDestPort() : tcpPackage.getSrcPort();
-                        int serverIp = tcpPackage.getSrcPort() == 443 ? ipPackage.getSrcAdd() : ipPackage.getDestAdd();
-                        int serverPort = tcpPackage.getSrcPort() == 443 ? tcpPackage.getSrcPort() : tcpPackage.getDestPort();
+                        int clientIp = tcpPackage.getSrcPort() == 443 ? ipPackage.getDestAdd()
+                            : ipPackage.getSrcAdd();
+                        int clientPort = tcpPackage.getSrcPort() == 443 ? tcpPackage.getDestPort()
+                            : tcpPackage.getSrcPort();
+                        int serverIp = tcpPackage.getSrcPort() == 443 ? ipPackage.getSrcAdd()
+                            : ipPackage.getDestAdd();
+                        int serverPort = tcpPackage.getSrcPort() == 443 ? tcpPackage.getSrcPort()
+                            : tcpPackage.getDestPort();
 
                         String id = id(clientIp, clientPort, serverIp, serverPort);
                         InputStream inputStream = inputStreamMap.compute(id, (key, stream) -> {
                             if (stream == null) {
                                 // TODO 这里要构造一个输入流
                                 return null;
-                            }else{
+                            } else {
                                 return stream;
                             }
                         });

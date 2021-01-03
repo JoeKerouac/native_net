@@ -23,12 +23,12 @@ public class NetFilterCallbackData {
     /**
      * 数据长度，无符号short
      */
-    private short  dataLen;
+    private short dataLen;
 
     /**
      * netfilter队列号
      */
-    private int    queueNum;
+    private int queueNum;
 
     /**
      * 内核hook点
@@ -38,10 +38,10 @@ public class NetFilterCallbackData {
      * <li>3:NF_IP_LOCAL_OUT</li>
      * <li>4:NF_IP_POST_ROUTING</li>
      */
-    private int    hookNum;
+    private int hookNum;
 
     /**
      * 数据包id，无符号int类型
      */
-    private int    id;
+    private int id;
 }

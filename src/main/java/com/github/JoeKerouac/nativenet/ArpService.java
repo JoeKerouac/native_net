@@ -22,7 +22,7 @@ public class ArpService {
     /**
      * 查询时的空mac
      */
-    private static byte[]                         EMPTY_MAC;
+    private static byte[] EMPTY_MAC;
 
     /**
      * 本地arp接口
@@ -32,7 +32,7 @@ public class ArpService {
     /**
      * arp接受sock
      */
-    private static int                            RCV_SOCK;
+    private static int RCV_SOCK;
 
     /**
      * ARP缓存
@@ -42,15 +42,15 @@ public class ArpService {
     /**
      * ARP缓存最大长度
      */
-    private static final int                      CACHE_SIZE = 1000;
+    private static final int CACHE_SIZE = 1000;
 
     /**
      * 是否关闭
      */
-    private static volatile boolean               SHUTDOWN   = false;
+    private static volatile boolean SHUTDOWN = false;
 
     static {
-        EMPTY_MAC = new byte[] { 0, 0, 0, 0, 0, 0 };
+        EMPTY_MAC = new byte[] {0, 0, 0, 0, 0, 0};
         NATIVE_INTERFACE = new NativeArpNetInterfaceImpl();
         RCV_SOCK = NATIVE_INTERFACE.createSock();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -72,7 +72,6 @@ public class ArpService {
                 ARP_CACHE.remove(arpData);
                 ARP_CACHE.add(arpData);
 
-
                 // 删除第一个
                 if (ARP_CACHE.size() >= CACHE_SIZE) {
                     ARP_CACHE.removeFirst();
@@ -84,8 +83,11 @@ public class ArpService {
 
     /**
      * 获取局域网所有ip对应的mac
-     * @param localIpStr 本地ip，例如192.168.1.1
-     * @param localMac 本地mac
+     * 
+     * @param localIpStr
+     *            本地ip，例如192.168.1.1
+     * @param localMac
+     *            本地mac
      * @return 局域网所有ip对应的mac
      */
     public static List<ArpData> getAllMac(String localIpStr, byte[] localMac) {
@@ -119,7 +121,9 @@ public class ArpService {
 
     /**
      * copy ArpData
-     * @param src 源ArpData
+     * 
+     * @param src
+     *            源ArpData
      * @return copy的ArpData
      */
     private static ArpData copyArpData(ArpData src) {
@@ -133,7 +137,9 @@ public class ArpService {
 
     /**
      * 从cache中查找指定ip的mac地址
-     * @param ip ip
+     * 
+     * @param ip
+     *            ip
      * @return ArpData
      */
     private static byte[] getMac(byte[] ip) {

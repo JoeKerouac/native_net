@@ -10,7 +10,6 @@ import com.joe.command.exception.CommandException;
  */
 public class IllegalCommandParamException extends CommandException {
 
-
     public IllegalCommandParamException(String message) {
         super(message);
     }

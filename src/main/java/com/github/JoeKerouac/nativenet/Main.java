@@ -24,12 +24,12 @@ import com.joe.utils.concurrent.ThreadUtil;
  */
 public class Main {
 
-    private static Map<String, InputRecordStream>  inputRecordStreamMap  = new ConcurrentHashMap<>();
+    private static Map<String, InputRecordStream> inputRecordStreamMap = new ConcurrentHashMap<>();
     private static Map<String, OutputRecordStream> outputRecordStreamMap = new ConcurrentHashMap<>();
 
-    private static Map<String, InputStream>        inputStreamMap        = new ConcurrentHashMap<>();
+    private static Map<String, InputStream> inputStreamMap = new ConcurrentHashMap<>();
 
-    private static Map<String, OutputStream>       outputStreamMap       = new ConcurrentHashMap<>();
+    private static Map<String, OutputStream> outputStreamMap = new ConcurrentHashMap<>();
 
     public static void main(String[] args) {
         netfilter();
@@ -42,27 +42,23 @@ public class Main {
                 IpPacket ipPackage = new IpPacket(data.getData());
 
                 if (ipPackage.getSubPackt() instanceof TcpSegment) {
-                    TcpSegment tcpPackage = (TcpSegment) ipPackage.getSubPackt();
+                    TcpSegment tcpPackage = (TcpSegment)ipPackage.getSubPackt();
                     // 只打印80端口的数据
                     if (tcpPackage.getDestPort() == 80 || tcpPackage.getSrcPort() == 80) {
-                        System.out
-                            .println("源ip是：" + NetStringUtils.toIpString(ipPackage.getSrcAdd()));
+                        System.out.println("源ip是：" + NetStringUtils.toIpString(ipPackage.getSrcAdd()));
                         System.out.println("\n");
-                        System.out
-                            .println("目标ip是：" + NetStringUtils.toIpString(ipPackage.getDestAdd()));
+                        System.out.println("目标ip是：" + NetStringUtils.toIpString(ipPackage.getDestAdd()));
                         System.out.println("数据是：" + new String(tcpPackage.getPayload()));
 
                         System.out.println("\n\n\n\n\n");
                         System.out.println("决策成功");
                     } else if (tcpPackage.getDestPort() == 443 || tcpPackage.getSrcPort() == 443) {
-                        int clientIp = tcpPackage.getSrcPort() == 443 ? ipPackage.getDestAdd()
-                            : ipPackage.getSrcAdd();
-                        int clientPort = tcpPackage.getSrcPort() == 443 ? tcpPackage.getDestPort()
-                            : tcpPackage.getSrcPort();
-                        int serverIp = tcpPackage.getSrcPort() == 443 ? ipPackage.getSrcAdd()
-                            : ipPackage.getDestAdd();
-                        int serverPort = tcpPackage.getSrcPort() == 443 ? tcpPackage.getSrcPort()
-                            : tcpPackage.getDestPort();
+                        int clientIp = tcpPackage.getSrcPort() == 443 ? ipPackage.getDestAdd() : ipPackage.getSrcAdd();
+                        int clientPort =
+                            tcpPackage.getSrcPort() == 443 ? tcpPackage.getDestPort() : tcpPackage.getSrcPort();
+                        int serverIp = tcpPackage.getSrcPort() == 443 ? ipPackage.getSrcAdd() : ipPackage.getDestAdd();
+                        int serverPort =
+                            tcpPackage.getSrcPort() == 443 ? tcpPackage.getSrcPort() : tcpPackage.getDestPort();
 
                         String id = id(clientIp, clientPort, serverIp, serverPort);
                         InputStream inputStream = inputStreamMap.compute(id, (key, stream) -> {
@@ -104,8 +100,8 @@ public class Main {
         int rcvSock = nativeArpNetInterface.createSock();
 
         // 开始扫描
-        List<ArpData> allMacData = ArpService.getAllMac("192.168.199.130",
-            NetStringUtils.toMacData("08:00:27:f6:f5:96"));
+        List<ArpData> allMacData =
+            ArpService.getAllMac("192.168.199.130", NetStringUtils.toMacData("08:00:27:f6:f5:96"));
 
         allMacData.forEach(arpData -> {
             System.out.println("扫描到的源ip是：" + NetStringUtils.toIpString(arpData.getSrcIp()));
@@ -123,8 +119,7 @@ public class Main {
                 System.out.println("接收到的源ip是：" + NetStringUtils.toIpString(arpData.getSrcIp()));
                 System.out.println("接收到的源mac是：" + NetStringUtils.toMacString(arpData.getSrcMac()));
                 System.out.println("接收到的目标ip是：" + NetStringUtils.toIpString(arpData.getDestIp()));
-                System.out
-                    .println("接收到的目标mac是：" + NetStringUtils.toMacString(arpData.getDestMac()));
+                System.out.println("接收到的目标mac是：" + NetStringUtils.toMacString(arpData.getDestMac()));
                 System.out.println("\n\n\n");
             }
         }).start();

@@ -22,5 +22,4 @@ public class CommandServer {
         SERVER.start();
     }
 
-
 }

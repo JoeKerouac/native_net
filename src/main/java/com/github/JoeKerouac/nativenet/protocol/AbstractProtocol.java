@@ -20,12 +20,12 @@ public abstract class AbstractProtocol {
     /**
      * 原始网络数据
      */
-    protected final byte[]   data;
+    protected final byte[] data;
 
     /**
      * tcp数据的起始位置，单位byte
      */
-    protected final int      offset;
+    protected final int offset;
 
     public AbstractProtocol(byte[] data) {
         this(data, 0);
@@ -38,6 +38,7 @@ public abstract class AbstractProtocol {
 
     /**
      * 获取子协议对象
+     * 
      * @return 子协议对象，无法解析出子协议时将会返回null
      */
     public AbstractProtocol getSubPackt() {
@@ -47,6 +48,7 @@ public abstract class AbstractProtocol {
 
     /**
      * 获取负载数据，不包含协议头
+     * 
      * @return 负载数据，返回的是copy数据，不应该直接透出
      */
     public byte[] getPayload() {
@@ -55,14 +57,18 @@ public abstract class AbstractProtocol {
 
     /**
      * 获取协议头长度
+     * 
      * @return 协议头长度，单位byte
      */
     public abstract int getHeaderLen();
 
     /**
      * 从指定bitOffset开始读取，读取长度len的数据
-     * @param bitOffset 起始bit位
-     * @param len 读取长度，单位bit
+     * 
+     * @param bitOffset
+     *            起始bit位
+     * @param len
+     *            读取长度，单位bit
      * @return 读取到的数据
      */
     protected int readBit(int bitOffset, int len) {
@@ -90,7 +96,9 @@ public abstract class AbstractProtocol {
 
     /**
      * 从当前数据中读取指定下标的bit数据
-     * @param bitIndex bitIndex
+     * 
+     * @param bitIndex
+     *            bitIndex
      * @return 如果该位是1则返回true，否则返回false
      */
     private boolean readBit(int bitIndex) {

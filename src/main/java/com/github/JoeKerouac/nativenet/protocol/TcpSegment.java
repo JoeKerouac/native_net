@@ -18,6 +18,7 @@ public class TcpSegment extends AbstractProtocol {
 
     /**
      * 获取源端口号
+     * 
      * @return 源端口号，16位
      */
     public int getSrcPort() {
@@ -26,6 +27,7 @@ public class TcpSegment extends AbstractProtocol {
 
     /**
      * 获取目标端口号
+     * 
      * @return 目标端口号，16位
      */
     public int getDestPort() {
@@ -34,8 +36,10 @@ public class TcpSegment extends AbstractProtocol {
 
     /**
      * 获取请求序列号
-     * <p></p>
+     * <p>
+     * </p>
      * 在TCP传送的流中，每一个字节一个序号。e.g.一个报文段的序号为300，此报文段数据部分共有100字节，则下一个报文段的序号为400
+     * 
      * @return 请求序列号，32位无符号
      */
     public int getReqSeq() {
@@ -44,6 +48,7 @@ public class TcpSegment extends AbstractProtocol {
 
     /**
      * 获取响应序列号
+     * 
      * @return 响应序列号，32位无符号
      */
     public int getAckSeq() {
@@ -52,6 +57,7 @@ public class TcpSegment extends AbstractProtocol {
 
     /**
      * 获取首部长度
+     * 
      * @return 首部长度，4位
      */
     @Override
@@ -62,6 +68,7 @@ public class TcpSegment extends AbstractProtocol {
 
     /**
      * 获取保留位
+     * 
      * @return 保留位，6位
      */
     public int getReserved() {
@@ -70,13 +77,14 @@ public class TcpSegment extends AbstractProtocol {
 
     /**
      * 获取标志位
+     * 
      * @return 标志位，6位，标志位对应信息如下(可能同时出现两个标志位，比如24，表示ACK|PSH)：
-     * <li>1:FIN</li>
-     * <li>2:SYN</li>
-     * <li>4:RST</li>
-     * <li>8:PSH</li>
-     * <li>16:ACK</li>
-     * <li>32:URG</li>
+     *         <li>1:FIN</li>
+     *         <li>2:SYN</li>
+     *         <li>4:RST</li>
+     *         <li>8:PSH</li>
+     *         <li>16:ACK</li>
+     *         <li>32:URG</li>
      */
     public int getFlag() {
         return readBit(106, 6);
@@ -84,6 +92,7 @@ public class TcpSegment extends AbstractProtocol {
 
     /**
      * 获取窗口大小
+     * 
      * @return 窗口大小，16位
      */
     public int getWindowSize() {
@@ -92,6 +101,7 @@ public class TcpSegment extends AbstractProtocol {
 
     /**
      * 获取校验和
+     * 
      * @return 校验和，16位
      */
     public int getCheckSum() {
@@ -100,6 +110,7 @@ public class TcpSegment extends AbstractProtocol {
 
     /**
      * 获取紧急指针
+     * 
      * @return 紧急指针，16位
      */
     public int getUrgentPoint() {

@@ -16,7 +16,7 @@ import com.joe.utils.collection.CollectionUtil;
 public class FilterCommand implements Command {
 
     private static final List<String> PKEYS = new ArrayList<>();
-    private static final List<String> KEYS  = new ArrayList<>();
+    private static final List<String> KEYS = new ArrayList<>();
 
     static {
         PKEYS.add("add");
@@ -29,8 +29,7 @@ public class FilterCommand implements Command {
     }
 
     @Override
-    public String exec(CommandContext input, CommandEngine engine,
-                       Environment env) throws CommandException {
+    public String exec(CommandContext input, CommandEngine engine, Environment env) throws CommandException {
 
         if (CollectionUtil.safeSizeOf(input.params()) != 1) {
             throw new IllegalCommandParamException("参数异常，非法参数：" + input.params());
@@ -88,18 +87,17 @@ public class FilterCommand implements Command {
 
     @Override
     public String help() {
-        return "过滤命令用法：\n"
-               + "filter --add-ip.src.ip=192.168.1.1       : 该命令将会过滤源ip是192.168.1.1的数据包\n"
-               + "filter --add-ip.dest.ip=192.168.1.1      : 该命令将会过滤目标ip是192.168.1.1的数据包\n"
-               + "filter --add-tcp.src.port=8080           : 该命令将会过滤源端口是8080的数据包\n"
-               + "filter --add-tcp.dest.port=8080          : 该命令将会过滤目标端口是8080的数据包\n"
-               + "filter --rm-ip.src.ip=192.168.1.1        : 该命令将移除对源ip是192.168.1.1的数据包的过滤\n"
-               + "filter --rm-ip.dest.ip=192.168.1.1       : 该命令将移除对目标ip是192.168.1.1的数据包的过滤\n"
-               + "filter --rm-ip.src.port=8080             : 该命令将移除对源端口是8080的数据包的过滤\n"
-               + "filter --rm-ip.dest.port=8080            : 该命令将移除对目标端口是8080的数据包的过滤\n"
-               + "filter --list-ip.src.ip                  : 该命令将列举当前对源ip的过滤列表\n"
-               + "filter --list-ip.dest.ip                 : 该命令将列举当前对目标ip的过滤列表\n"
-               + "filter --list-ip.src.port                : 该命令将列举当前对源端口的过滤列表\n"
-               + "filter --list-ip.dest.port               : 该命令将列举当前对目标端口的过滤列表\n";
+        return "过滤命令用法：\n" + "filter --add-ip.src.ip=192.168.1.1       : 该命令将会过滤源ip是192.168.1.1的数据包\n"
+            + "filter --add-ip.dest.ip=192.168.1.1      : 该命令将会过滤目标ip是192.168.1.1的数据包\n"
+            + "filter --add-tcp.src.port=8080           : 该命令将会过滤源端口是8080的数据包\n"
+            + "filter --add-tcp.dest.port=8080          : 该命令将会过滤目标端口是8080的数据包\n"
+            + "filter --rm-ip.src.ip=192.168.1.1        : 该命令将移除对源ip是192.168.1.1的数据包的过滤\n"
+            + "filter --rm-ip.dest.ip=192.168.1.1       : 该命令将移除对目标ip是192.168.1.1的数据包的过滤\n"
+            + "filter --rm-ip.src.port=8080             : 该命令将移除对源端口是8080的数据包的过滤\n"
+            + "filter --rm-ip.dest.port=8080            : 该命令将移除对目标端口是8080的数据包的过滤\n"
+            + "filter --list-ip.src.ip                  : 该命令将列举当前对源ip的过滤列表\n"
+            + "filter --list-ip.dest.ip                 : 该命令将列举当前对目标ip的过滤列表\n"
+            + "filter --list-ip.src.port                : 该命令将列举当前对源端口的过滤列表\n"
+            + "filter --list-ip.dest.port               : 该命令将列举当前对目标端口的过滤列表\n";
     }
 }

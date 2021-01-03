@@ -18,6 +18,7 @@ public class IpPacket extends AbstractProtocol {
 
     /**
      * 获取版本号
+     * 
      * @return 版本号，4位
      */
     public int getVersion() {
@@ -26,6 +27,7 @@ public class IpPacket extends AbstractProtocol {
 
     /**
      * 获取首部长度
+     * 
      * @return 首部长度，4位，单位byte
      */
     @Override
@@ -36,6 +38,7 @@ public class IpPacket extends AbstractProtocol {
 
     /**
      * 获取服务类型，目前一般不用
+     * 
      * @return 服务类型，8位
      */
     public int getServiceType() {
@@ -44,6 +47,7 @@ public class IpPacket extends AbstractProtocol {
 
     /**
      * 获取整个报文的长度
+     * 
      * @return 报文长度，16位，单位byte
      */
     public int getPackgeLen() {
@@ -52,6 +56,7 @@ public class IpPacket extends AbstractProtocol {
 
     /**
      * 标识字段，一般每发送一份报文值会加1
+     * 
      * @return 标识字段，16位
      */
     public int getSeq() {
@@ -60,10 +65,11 @@ public class IpPacket extends AbstractProtocol {
 
     /**
      * ip报文类型
+     * 
      * @return 总共3位，R、DF、MF三位。目前只有后两位有效
-     * <li>R位：保留位，固定0</li>
-     * <li>DF位：为1表示不分片，为0表示分片</li>
-     * <li>MF：为1表示“更多的片”，为0表示这是最后一片</li>
+     *         <li>R位：保留位，固定0</li>
+     *         <li>DF位：为1表示不分片，为0表示分片</li>
+     *         <li>MF：为1表示“更多的片”，为0表示这是最后一片</li>
      */
     public int getFlag() {
         return readBit(48, 3);
@@ -71,6 +77,7 @@ public class IpPacket extends AbstractProtocol {
 
     /**
      * 获取片偏移，总共13位，如果数据分片表示分片在整个数据中的起始位置（第一片是0，每增加1表示多一个字节，即8bit）
+     * 
      * @return 片偏移，总共13位
      */
     public int getOffset() {
@@ -79,6 +86,7 @@ public class IpPacket extends AbstractProtocol {
 
     /**
      * 获取数据TTL
+     * 
      * @return TTL，总共8位
      */
     public int getTtl() {
@@ -87,11 +95,12 @@ public class IpPacket extends AbstractProtocol {
 
     /**
      * 获取子协议
+     * 
      * @return 子协议，长度8位
-     * <li>1:ICMP协议</li>
-     * <li>2:IGMP协议</li>
-     * <li>6:TCP协议</li>
-     * <li>17:UDP协议</li>
+     *         <li>1:ICMP协议</li>
+     *         <li>2:IGMP协议</li>
+     *         <li>6:TCP协议</li>
+     *         <li>17:UDP协议</li>
      */
     public int getSubProtocol() {
         return readBit(72, 8);
@@ -99,6 +108,7 @@ public class IpPacket extends AbstractProtocol {
 
     /**
      * 获取校验和
+     * 
      * @return 校验和，总共16位
      */
     public int getCheckSum() {
@@ -107,6 +117,7 @@ public class IpPacket extends AbstractProtocol {
 
     /**
      * 获取源地址
+     * 
      * @return 源地址，32位，无符号
      */
     public int getSrcAdd() {
@@ -115,6 +126,7 @@ public class IpPacket extends AbstractProtocol {
 
     /**
      * 获取目标地址
+     * 
      * @return 目标地址，32位，无符号
      */
     public int getDestAdd() {
